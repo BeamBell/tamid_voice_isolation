@@ -9,12 +9,17 @@ This is a simplified implementation of speech-to-text using Deepgram's API. The 
 npm install
 ```
 
-2. Create a `.env` file:
+2. If you're on macOS, install required audio tools using Homebrew:
+```bash
+brew install sox
+```
+
+3. Create a `.env` file:
 ```bash
 cp .env.example .env
 ```
 
-3. Get a Deepgram API key from [Deepgram's Console](https://console.deepgram.com/) and add it to your `.env` file:
+4. Get a Deepgram API key from [Deepgram's Console](https://console.deepgram.com/) and add it to your `.env` file:
 ```
 DEEPGRAM_API_KEY="your-api-key-here"
 ```
