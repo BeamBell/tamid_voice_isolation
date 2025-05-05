@@ -21,14 +21,42 @@ DEEPGRAM_API_KEY="your-api-key-here"
 
 ## Usage
 
+Run the application with:
+```bash
+npm start
+```
+
+You should see output in the console as you speak into your microphone:
+- Interim results (while speaking): Displayed in cyan as "Listening: [text]"
+- Final results (after a pause): Displayed in green as "FINAL: [text]"
+- Processing time: Shows how long it took to process the transcription
+
+Press Ctrl+C to stop the application.
+
+## Microphone Testing
+
+If you're having issues with the transcription, you can test your microphone to ensure it's properly configured:
+
+```bash
+node mic-test.js
+```
+
+This will:
+1. Record audio from your microphone for 5 seconds
+2. Save the raw audio data to `mic-test.raw`
+3. Display how many chunks of audio data were received
+
+A successful test should show multiple chunks of audio data being received. If you see "0 chunks" or errors, there may be an issue with your microphone or permissions.
+
+Note: The `mic-test.raw` file is temporary and can be safely deleted after testing.
+
+## Implementation Details
+
 The implementation provides a `SpeechToText` class that handles the connection to Deepgram and processes audio data. Here's how to use it:
 
 ```javascript
 const stt = new SpeechToText();
 stt.start();
-
-// To send audio data:
-stt.send(audioData);
 
 // To stop the connection:
 stt.stop();
@@ -55,7 +83,18 @@ Your task is to:
 The current implementation uses Deepgram's `nova-2` model with the following settings:
 - Encoding: mulaw
 - Sample rate: 8000 Hz
+- Channels: 1
 - Smart formatting: enabled
 - Interim results: enabled
 - Endpointing: 200ms
-- Utterance end: 1000ms 
+- Utterance end: 1000ms
+
+## Troubleshooting
+
+If you're not seeing any transcription output:
+
+1. Check that your microphone is properly connected and has permission to be accessed
+2. Run the microphone test (`node mic-test.js`) to verify audio is being captured
+3. Check your Deepgram API key is correctly set in the `.env` file
+4. Ensure you're speaking loud enough for your microphone to pick up
+5. Try adjusting the microphone settings in the `constructor()` method of the `SpeechToText` class 
